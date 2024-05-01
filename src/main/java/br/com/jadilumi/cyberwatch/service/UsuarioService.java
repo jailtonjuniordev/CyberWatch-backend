@@ -30,7 +30,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO getUsuario(String userName) throws Exception {
-        Optional<Usuario> entity = userRepository.findByUsername(userName);
+        Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(userName);
         if(entity.isEmpty()){
             throw new Exception("Usuário não encontrado!");
         }
@@ -38,11 +38,11 @@ public class UsuarioService {
     }
 
     public boolean recuperarPorUsername(String userName) {
-        return userRepository.findByUsername(userName).isPresent();
+        return userRepository.findByUsernameAndDeletedIsFalse(userName).isPresent();
     }
 
     public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDTO) throws Exception {
-        Optional<Usuario> entity = userRepository.findByUsername(usuarioDTO.getUsername());
+        Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(usuarioDTO.getUsername());
         if(entity.isEmpty()){
             throw new Exception("Usuário não encontrado!");
         }
@@ -59,6 +59,8 @@ public class UsuarioService {
         Optional<Usuario> entity = userRepository.findByUsername(userName);
         if(entity.isEmpty()){
             throw new Exception("Usuário não encontrado!");
+        }else if(entity.get().isDeleted()){
+            throw new Exception("Usuário foi desativado!");
         }
         entity.get().setDeleted(true);
         userRepository.save(entity.get());

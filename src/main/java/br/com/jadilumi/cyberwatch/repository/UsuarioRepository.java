@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>, JpaSpecificationExecutor<Usuario> {
 
+    Optional<Usuario> findByUsernameAndDeletedIsFalse(String username);
     Optional<Usuario> findByUsername(String username);
 }
