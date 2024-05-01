@@ -1,6 +1,8 @@
 package br.com.jadilumi.cyberwatch.service;
 
 import br.com.jadilumi.cyberwatch.dto.LoginDTO;
+import br.com.jadilumi.cyberwatch.exception.IncorrectPassword;
+import br.com.jadilumi.cyberwatch.exception.UserNotFoundException;
 import br.com.jadilumi.cyberwatch.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +19,12 @@ public class LoginService {
         Usuario userRecuperado = usuarioService.recuperarPorUsername(loginDTO.username());
 
         if (userRecuperado == null) {
-            return "Usuario não encontrado!!";
+            throw new UserNotFoundException();
         } else {
             if (userRecuperado.getUsername().equals(loginDTO.username()) && userRecuperado.getSenha().equals(loginDTO.senha())) {
                 return hashLogado;
             } else {
-                return "Senha Incorreta!";
+                throw new IncorrectPassword();
             }
         }
     }
