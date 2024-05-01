@@ -20,7 +20,7 @@ Este é o backend da aplicação web CyberWatch, que mapeia e analisa ocorrênci
 1. Clone este repositório:
 
     ```bash
-    git clone https://github.com/Jadilumi/CyberWatch.git
+    git clone https://github.com/Jadilumi/CyberWatch-Service.git
     ```
 
 2. Navegue até o diretório clonado:
