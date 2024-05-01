@@ -1,6 +1,7 @@
 package br.com.jadilumi.cyberwatch.controller;
 
 import br.com.jadilumi.cyberwatch.dto.LoginDTO;
+import br.com.jadilumi.cyberwatch.service.LoginService;
 import br.com.jadilumi.cyberwatch.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class UsuarioController {
 
-    private final UsuarioService userService;
+    private final LoginService loginService;
 
     @PostMapping("/")
     public ResponseEntity<String> logarUsuario(@RequestBody LoginDTO loginDTO) {
-        return new ResponseEntity<>(userService.logarUsuario(loginDTO), HttpStatus.OK);
+        return new ResponseEntity<>(loginService.logarUsuario(loginDTO), HttpStatus.OK);
     }
 }
