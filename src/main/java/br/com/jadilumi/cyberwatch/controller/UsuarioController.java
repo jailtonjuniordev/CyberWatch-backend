@@ -20,7 +20,7 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarioService.criarUsuario(usuarioDTO),HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userName}")
     public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "userName") String userName) throws Exception {
         usuarioService.deleteUsuario(userName);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuário deletado com sucesso.");
