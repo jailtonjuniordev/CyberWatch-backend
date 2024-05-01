@@ -14,12 +14,12 @@ public class LoginService {
     private final UsuarioService usuarioService;
 
     public String logarUsuario(LoginDTO loginDTO) {
-        Usuario userRecuperado = usuarioService.recuperarPorUsername(loginDTO.username());
+        boolean userRecuperado = usuarioService.recuperarPorUsername(loginDTO.username());
 
-        if (userRecuperado == null) {
+        if (!userRecuperado) {
             return "Usuario não encontrado!!";
         } else {
-            if (userRecuperado.getUsername().equals(loginDTO.username()) && userRecuperado.getSenha().equals(loginDTO.senha())) {
+            if (userRecuperado) {
                 return hashLogado;
             } else {
                 return "Senha Incorreta!";
