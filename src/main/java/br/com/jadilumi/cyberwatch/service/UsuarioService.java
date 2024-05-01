@@ -1,9 +1,9 @@
 package br.com.jadilumi.cyberwatch.service;
 
 import br.com.jadilumi.cyberwatch.dto.UsuarioDTO;
-import br.com.jadilumi.cyberwatch.dto.UsuarioMapper;
 import br.com.jadilumi.cyberwatch.model.Usuario;
 import br.com.jadilumi.cyberwatch.repository.UsuarioRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +14,19 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository userRepository;
+
     @Autowired
-    private UsuarioMapper usuarioMapper;
+    private ModelMapper modelMapper;
+
 
     public UsuarioDTO criarUsuario(UsuarioDTO usuarioDTO) throws Exception {
-        Optional<Usuario> entity = userRepository.findByUsername(usuarioDTO.username());
+        Optional<Usuario> entity = userRepository.findByUsername(usuarioDTO.getUsername());
         if(entity.isPresent()){
             throw new Exception("Usuário já encontrado!");
         }
-        Usuario user = usuarioMapper.toEntity(usuarioDTO);
-       return usuarioMapper.toDTO(userRepository.save(user));
+        Usuario user = modelMapper.map(usuarioDTO,Usuario.class);
+        user.setCreatedBy("System");
+       return modelMapper.map((userRepository.save(user)), UsuarioDTO.class);
     }
 
     public UsuarioDTO getUsuario(String userName) throws Exception {
@@ -31,7 +34,7 @@ public class UsuarioService {
         if(entity.isEmpty()){
             throw new Exception("Usuário não encontrado!");
         }
-        return usuarioMapper.toDTO(entity.get()) ;
+        return modelMapper.map(entity.get(),UsuarioDTO.class) ;
     }
 
     public boolean recuperarPorUsername(String userName) {
@@ -39,17 +42,17 @@ public class UsuarioService {
     }
 
     public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDTO) throws Exception {
-        Optional<Usuario> entity = userRepository.findByUsername(usuarioDTO.username());
+        Optional<Usuario> entity = userRepository.findByUsername(usuarioDTO.getUsername());
         if(entity.isEmpty()){
             throw new Exception("Usuário não encontrado!");
         }
-        entity.get().setUsername(usuarioDTO.username());
-        entity.get().setNome(usuarioDTO.nome());
-        entity.get().setSenha(usuarioDTO.senha());
-        entity.get().setGenero(usuarioDTO.genero());
-        entity.get().setTelefone(usuarioDTO.telefone());
+        entity.get().setUsername(usuarioDTO.getUsername());
+        entity.get().setNome(usuarioDTO.getNome());
+        entity.get().setSenha(usuarioDTO.getSenha());
+        entity.get().setGenero(usuarioDTO.getGenero());
+        entity.get().setTelefone(usuarioDTO.getTelefone());
 
-        return usuarioMapper.toDTO(userRepository.save(entity.get()));
+        return modelMapper.map(userRepository.save(entity.get()), UsuarioDTO.class);
     }
 
     public void deleteUsuario(String userName) throws Exception {
