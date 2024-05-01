@@ -26,7 +26,7 @@ Este é o backend da aplicação web de mapeamento e análise de ocorrências de
 2. Navegue até o diretório clonado:
 
     ```bash
-    cd CyberWatch
+    cd CyberWatch-Service
     ```
 
 3. Configure as propriedades do banco de dados no arquivo `application.properties`.
