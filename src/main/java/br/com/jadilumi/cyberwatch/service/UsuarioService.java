@@ -1,6 +1,7 @@
 package br.com.jadilumi.cyberwatch.service;
 
 import br.com.jadilumi.cyberwatch.dto.UsuarioDTO;
+import br.com.jadilumi.cyberwatch.dto.UsuarioRetornoDTO;
 import br.com.jadilumi.cyberwatch.model.Usuario;
 import br.com.jadilumi.cyberwatch.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
@@ -22,26 +23,26 @@ public class UsuarioService {
     public UsuarioDTO criarUsuario(UsuarioDTO usuarioDTO) throws Exception {
         Optional<Usuario> entity = userRepository.findByUsername(usuarioDTO.getUsername());
         if(entity.isPresent()){
-            throw new Exception("Usuário já encontrado!");
+            throw new Exception("Usuário já está sendo usado!");
         }
         Usuario user = modelMapper.map(usuarioDTO,Usuario.class);
         user.setCreatedBy("System");
        return modelMapper.map((userRepository.save(user)), UsuarioDTO.class);
     }
 
-    public UsuarioDTO getUsuario(String userName) throws Exception {
+    public UsuarioRetornoDTO getUsuario(String userName) throws Exception {
         Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(userName);
         if(entity.isEmpty()){
             throw new Exception("Usuário não encontrado!");
         }
-        return modelMapper.map(entity.get(),UsuarioDTO.class) ;
+        return modelMapper.map(entity.get(),UsuarioRetornoDTO.class) ;
     }
 
     public boolean recuperarPorUsername(String userName) {
         return userRepository.findByUsernameAndDeletedIsFalse(userName).isPresent();
     }
 
-    public UsuarioDTO atualizarUsuario(UsuarioDTO usuarioDTO) throws Exception {
+    public UsuarioRetornoDTO atualizarUsuario(UsuarioDTO usuarioDTO) throws Exception {
         Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(usuarioDTO.getUsername());
         if(entity.isEmpty()){
             throw new Exception("Usuário não encontrado!");
@@ -52,7 +53,7 @@ public class UsuarioService {
         entity.get().setGenero(usuarioDTO.getGenero());
         entity.get().setTelefone(usuarioDTO.getTelefone());
 
-        return modelMapper.map(userRepository.save(entity.get()), UsuarioDTO.class);
+        return modelMapper.map(userRepository.save(entity.get()), UsuarioRetornoDTO.class);
     }
 
     public void deleteUsuario(String userName) throws Exception {

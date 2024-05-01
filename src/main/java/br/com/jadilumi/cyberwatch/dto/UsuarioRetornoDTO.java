@@ -11,11 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioDTO {
+public class UsuarioRetornoDTO {
     private Long id;
     private String username;
     private String nome;
-    private String senha;
     private Character genero;
     private String telefone;
 }
