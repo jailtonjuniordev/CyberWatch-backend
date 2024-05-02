@@ -21,30 +21,30 @@ public class UsuarioService {
 
 
     public UsuarioDTO criarUsuario(UsuarioDTO usuarioDTO) throws Exception {
-        Optional<Usuario> entity = userRepository.findByUsername(usuarioDTO.getUsername());
-        if(entity.isPresent()){
+        Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(usuarioDTO.getUsername());
+        if (entity.isPresent()) {
             throw new Exception("Usuário já está sendo usado!");
         }
-        Usuario user = modelMapper.map(usuarioDTO,Usuario.class);
+        Usuario user = modelMapper.map(usuarioDTO, Usuario.class);
         user.setCreatedBy("System");
-       return modelMapper.map((userRepository.save(user)), UsuarioDTO.class);
+        return modelMapper.map((userRepository.save(user)), UsuarioDTO.class);
     }
 
     public UsuarioRetornoDTO getUsuario(String userName) throws Exception {
         Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(userName);
-        if(entity.isEmpty()){
+        if (entity.isEmpty()) {
             throw new Exception("Usuário não encontrado!");
         }
-        return modelMapper.map(entity.get(),UsuarioRetornoDTO.class) ;
+        return modelMapper.map(entity.get(), UsuarioRetornoDTO.class);
     }
 
-    public boolean recuperarPorUsername(String userName) {
-        return userRepository.findByUsernameAndDeletedIsFalse(userName).isPresent();
+    public Usuario recuperarPorUsername(String userName) {
+        return userRepository.findByUsername(userName);
     }
 
     public UsuarioRetornoDTO atualizarUsuario(UsuarioDTO usuarioDTO) throws Exception {
         Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(usuarioDTO.getUsername());
-        if(entity.isEmpty()){
+        if (entity.isEmpty()) {
             throw new Exception("Usuário não encontrado!");
         }
         entity.get().setUsername(usuarioDTO.getUsername());
@@ -57,10 +57,10 @@ public class UsuarioService {
     }
 
     public void deleteUsuario(String userName) throws Exception {
-        Optional<Usuario> entity = userRepository.findByUsername(userName);
-        if(entity.isEmpty()){
+        Optional<Usuario> entity = userRepository.findByUsernameAndDeletedIsFalse(userName);
+        if (entity.isEmpty()) {
             throw new Exception("Usuário não encontrado!");
-        }else if(entity.get().isDeleted()){
+        } else if (entity.get().isDeleted()) {
             throw new Exception("Usuário foi desativado!");
         }
         entity.get().setDeleted(true);
