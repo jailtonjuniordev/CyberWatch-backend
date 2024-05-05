@@ -39,7 +39,7 @@ public class UsuarioService {
     }
 
     public Usuario recuperarPorUsername(String userName) {
-        return userRepository.findByUsername(userName);
+        return userRepository.findByUsername(userName).get();
     }
 
     public UsuarioRetornoDTO atualizarUsuario(UsuarioDTO usuarioDTO) throws Exception {
