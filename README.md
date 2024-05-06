@@ -1,6 +1,6 @@
-# Backend da Aplicação de Mapeamento e Análise de Ocorrências de Bullying
+# CyberWatch-Service - Aplicação de Mapeamento e Análise de Ocorrências de Bullying
 
-Este é o backend da aplicação web de mapeamento e análise de ocorrências de bullying. Foi desenvolvido usando Spring Boot e fornece APIs RESTful para manipulação de dados.
+Este é o backend da aplicação web CyberWatch, que mapeia e analisa ocorrências de bullying. Foi desenvolvido usando Spring Boot e fornece APIs RESTful para manipulação de dados.
 
 ## Funcionalidades Principais
 
@@ -20,13 +20,13 @@ Este é o backend da aplicação web de mapeamento e análise de ocorrências de
 1. Clone este repositório:
 
     ```bash
-    git clone https://github.com/Jadilumi/CyberWatch.git
+    git clone https://github.com/Jadilumi/CyberWatch-Service.git
     ```
 
 2. Navegue até o diretório clonado:
 
     ```bash
-    cd CyberWatch
+    cd CyberWatch-Service
     ```
 
 3. Configure as propriedades do banco de dados no arquivo `application.properties`.
@@ -40,7 +40,7 @@ Este é o backend da aplicação web de mapeamento e análise de ocorrências de
 5. Execute a aplicação:
 
     ```bash
-    java -jar target/cyberwatch.jar
+    java -jar target/CyberWatch-Service.jar
     ```
 
 A aplicação estará disponível em `http://localhost:8080`.
