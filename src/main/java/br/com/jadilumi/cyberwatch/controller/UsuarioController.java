@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuario")
+@CrossOrigin(value = "*", maxAge = 3600)
 public class UsuarioController {
 
     @Autowired
